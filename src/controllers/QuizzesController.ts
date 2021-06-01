@@ -62,7 +62,16 @@ class QuizzesController {
       return response.status(400).json({ message: 'Quiz not fauld.' });
     }
 
-    return response.json(quiz);
+    const questionsTmp = await knex('questions').select('*');
+
+    const questions = questionsTmp
+      .filter(question => question.quiz_id == id)
+      .map(question => question.description);
+
+    return response.json({
+      ...quiz,
+      questions,
+    });
   }
 }
 
