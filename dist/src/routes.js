@@ -51,6 +51,7 @@ routes.post('/answers', celebrate_1.celebrate({
         answer: celebrate_1.Joi.string().required(),
         user: celebrate_1.Joi.string().required(),
         date: celebrate_1.Joi.date().required(),
+        question_id: celebrate_1.Joi.number().required(),
     })
 }), answersController.store);
 routes.put('/answers', celebrate_1.celebrate({
@@ -59,6 +60,7 @@ routes.put('/answers', celebrate_1.celebrate({
         answer: celebrate_1.Joi.string().required(),
         user: celebrate_1.Joi.string().required(),
         date: celebrate_1.Joi.date().required(),
+        question_id: celebrate_1.Joi.number().required(),
     })
 }), answersController.update);
 exports.default = routes;

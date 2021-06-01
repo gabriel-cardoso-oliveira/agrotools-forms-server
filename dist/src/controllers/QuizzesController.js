@@ -53,7 +53,16 @@ class QuizzesController {
             if (!quiz) {
                 return response.status(400).json({ message: 'Quiz not fauld.' });
             }
-            return response.json(quiz);
+            const questionsTmp = yield connection_1.default('questions').select('*');
+            const questions = questionsTmp
+                .filter(question => question.quiz_id == id)
+                .map(question => {
+                return {
+                    id: question.id,
+                    description: question.description,
+                };
+            });
+            return response.json(Object.assign(Object.assign({}, quiz), { questions }));
         });
     }
 }

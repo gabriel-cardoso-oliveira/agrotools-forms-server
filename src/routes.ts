@@ -52,6 +52,7 @@ routes.post('/answers', celebrate({
     answer: Joi.string().required(),
     user: Joi.string().required(),
     date: Joi.date().required(),
+    question_id: Joi.number().required(),
   })
 }), answersController.store);
 routes.put('/answers', celebrate({
@@ -60,6 +61,7 @@ routes.put('/answers', celebrate({
     answer: Joi.string().required(),
     user: Joi.string().required(),
     date: Joi.date().required(),
+    question_id: Joi.number().required(),
   })
 }), answersController.update);
 

@@ -17,6 +17,7 @@ function up(knex) {
             table.string('answer').notNullable();
             table.string('user').notNullable();
             table.date('date').nullable();
+            table.integer('question_id').notNullable();
         });
     });
 }

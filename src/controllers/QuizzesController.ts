@@ -66,7 +66,12 @@ class QuizzesController {
 
     const questions = questionsTmp
       .filter(question => question.quiz_id == id)
-      .map(question => question.description);
+      .map(question => {
+        return {
+          id: question.id,
+          description: question.description,
+        };
+      });
 
     return response.json({
       ...quiz,

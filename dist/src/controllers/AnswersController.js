@@ -16,11 +16,12 @@ const connection_1 = __importDefault(require("./../database/connection"));
 class AnswersController {
     store(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { answer, user, date, } = request.body;
+            const { answer, user, date, question_id, } = request.body;
             const data = {
                 answer,
                 user,
                 date,
+                question_id,
             };
             const answerTmp = yield connection_1.default('answers').insert(data);
             return response.json(Object.assign({ id: answerTmp[0] }, data));
@@ -28,11 +29,12 @@ class AnswersController {
     }
     update(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { answerId, answer, user, date, } = request.body;
+            const { answerId, answer, user, date, question_id, } = request.body;
             const data = {
                 answer,
                 user,
                 date,
+                question_id,
             };
             const answerTmp = yield connection_1.default('answers')
                 .where('id', answerId)

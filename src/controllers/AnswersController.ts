@@ -7,12 +7,14 @@ class AnswersController {
       answer,
       user,
       date,
+      question_id,
     } = request.body;
 
     const data = {
       answer,
       user,
       date,
+      question_id,
     }
 
     const answerTmp = await knex('answers').insert(data);
@@ -29,12 +31,14 @@ class AnswersController {
       answer,
       user,
       date,
+      question_id,
     } = request.body;
 
     const data = {
       answer,
       user,
       date,
+      question_id,
     }
 
     const answerTmp = await knex('answers')
