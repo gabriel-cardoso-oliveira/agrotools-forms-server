@@ -51,11 +51,24 @@ class AnswersController {
     show(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = request.params;
-            const answer = yield connection_1.default('answers').where('id', id).first();
-            if (!answer) {
-                return response.status(400).json({ message: 'Answer not fauld.' });
-            }
-            return response.json(answer);
+            const quiz = yield connection_1.default('quizzes').where('id', id).first();
+            const answer = yield connection_1.default('answers').select('*');
+            const questionsTmp = yield connection_1.default('questions').select('*');
+            const questions = questionsTmp
+                .filter(question => question.quiz_id == id)
+                .map(question => {
+                const answerTmp = answer
+                    .filter(ans => ans.question_id == question.id)
+                    .map(ans => {
+                    return { description: ans.answer };
+                });
+                return {
+                    id: question.id,
+                    description: question.description,
+                    answer: answerTmp,
+                };
+            });
+            return response.json(Object.assign(Object.assign({}, quiz), { questions }));
         });
     }
 }

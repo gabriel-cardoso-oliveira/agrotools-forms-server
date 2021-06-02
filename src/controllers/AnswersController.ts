@@ -60,13 +60,32 @@ class AnswersController {
   async show(request: Request, response: Response) {
     const { id } = request.params;
 
-    const answer = await knex('answers').where('id', id).first();
+    const quiz = await knex('quizzes').where('id', id).first();
 
-    if (!answer) {
-      return response.status(400).json({ message: 'Answer not fauld.' });
-    }
+    const answer = await knex('answers').select('*');
 
-    return response.json(answer);
+    const questionsTmp = await knex('questions').select('*');
+
+    const questions = questionsTmp
+      .filter(question => question.quiz_id == id)
+      .map(question => {
+        const answerTmp = answer
+          .filter(ans => ans.question_id == question.id)
+          .map(ans => {
+            return { description: ans.answer };
+          });
+
+        return {
+          id: question.id,
+          description: question.description,
+          answer: answerTmp,
+        };
+      });
+
+    return response.json({
+      ...quiz,
+      questions,
+    });
   }
 }
 
